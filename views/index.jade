@@ -1,0 +1,51 @@
+script(src='http://code.jquery.com/jquery-1.7.1.min.js')
+script(src='/socket.io/socket.io.js')
+script(type='text/javascript')
+  $(function(){
+    var consoleD = $("#console")
+      , recent = $("#recent");
+    consoleD.log = function(data){
+      consoleD.append(data + '<br/>');
+    }
+    recent.log = function(data){
+      recent.text(data);
+    }
+    consoleD.log("hello");
+    consoleD.log("keesun");
+    
+    //Socket.IO
+    var socket = io.connect('http://localhost:3000');
+    socket.on('news', function(data) {
+      console.log(data);
+      consoleD.log(data.hello);
+      recent.log(data.hello);
+      socket.emit('reply', {content: 'I got it'});
+    });
+    //Receiving a message
+    socket.on('message', function(data) {
+      consoleD.log(data.content);
+      recent.log(data.content);
+    });
+    
+    //Sending a message
+    $("#sendForm").submit(function(e){
+      var messageInput = $("#message");
+      socket.emit('message', {content: messageInput.val()});
+      messageInput.val("");
+      e.preventDefault();
+    });
+    
+  });
+h1 Node.js + Socket.io DEMO
+p Welcome Tester, Did you eat some foods?
+h1 Recent
+div#recent
+h1 Send Message Form
+div#sendForm
+  - var action = '/send'
+  form(method='post', action=action)
+    label message: 
+      input(type='text', name='message', id='message')
+    input(type='submit', value='send()')
+h1 Console
+div#console

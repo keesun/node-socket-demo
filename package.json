@@ -1,0 +1,10 @@
+{
+    "name": "node-socket-demo"
+  , "version": "0.0.1"
+  , "private": true
+  , "dependencies": {
+      "jade": ">= 0.20.0"
+	  , "express": ">=2.5.4"
+	  , "socket.io": ">=0.8.7"
+  }
+}
