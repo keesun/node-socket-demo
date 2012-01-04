@@ -15,10 +15,10 @@ app.get('/', function(req, res) {
 io.sockets.on('connection', function(socket){
   socket.emit('news', {hello: 'world'});
   socket.on('reply', function(data){
-    console.log('client %s got it, and replied "%s"', socket, data.content);
+//    console.log('client %s got it, and replied "%s"', socket, data.content);
   });
   socket.on('message', function(data){
-    console.log(data);
+//    console.log(data);
     io.sockets.emit('message', {'content':data.content});  
   });
 });
